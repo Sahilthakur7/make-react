@@ -163,7 +163,8 @@ var useState = function useState(initialState) {
   var state = initialState;
 
   var setState = function setState(newState) {
-    return state = newState;
+    state = newState;
+    rerender();
   };
 
   return [state, setState];
@@ -174,6 +175,10 @@ var App = function App() {
       name = _a[0],
       setName = _a[1];
 
+  var _b = useState(0),
+      count = _b[0],
+      setCount = _b[1];
+
   return React.createElement("div", {
     className: "hello"
   }, React.createElement("h1", null, "Hello ", name), React.createElement("input", {
@@ -182,7 +187,15 @@ var App = function App() {
     onchange: function onchange(e) {
       return setName(e.target.value);
     }
-  }), React.createElement("p", null, "Peepli live"));
+  }), React.createElement("p", null, "The count is ", count), React.createElement("button", {
+    onclick: function onclick() {
+      return setCount(count + 1);
+    }
+  }, "+"), React.createElement("button", {
+    onclick: function onclick() {
+      return setCount(count - 1);
+    }
+  }, "-"), React.createElement("p", null, "Peepli live"));
 };
 
 var render = function render(reactElementOrStringOrNumber, container) {
@@ -208,6 +221,11 @@ var render = function render(reactElementOrStringOrNumber, container) {
   }
 
   container.appendChild(actualDomElement);
+};
+
+var rerender = function rerender() {
+  document.querySelector('#app').firstChild.remove();
+  render(React.createElement(App, null), document.querySelector("#app"));
 };
 
 render(React.createElement(App, null), document.querySelector("#app"));
@@ -239,7 +257,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53993" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60588" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

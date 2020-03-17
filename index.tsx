@@ -11,13 +11,17 @@ const React = {
 
 const useState = (initialState) => {
   let state = initialState;
-  const setState = (newState) => state = newState;
+  const setState = (newState) => {
+    state = newState;
+    rerender();
+  }
 
   return [state, setState];
 }
 
 const App = () => {
   const [name, setName] = useState("Ameet");
+  const [count, setCount] = useState(0);
   return (
     <div className="hello">
       <h1>Hello {name}</h1>
@@ -26,6 +30,9 @@ const App = () => {
         placeholder="Person"
         onchange={e => setName(e.target.value)}
       />
+      <p>The count is {count}</p>
+      <button onclick={() => setCount(count + 1)}>+</button>
+      <button onclick={() => setCount(count - 1)}>-</button>
       <p>Peepli live</p>
     </div>
   )
@@ -55,5 +62,10 @@ const render = (reactElementOrStringOrNumber, container) => {
 
   container.appendChild(actualDomElement);
 };
+
+const rerender = () => {
+  document.querySelector('#app').firstChild.remove();
+  render(<App />, document.querySelector("#app"));
+}
 
 render(<App />, document.querySelector("#app"));
