@@ -162,7 +162,10 @@ var React = {
 var App = function App() {
   return React.createElement("div", {
     className: "hello"
-  }, React.createElement("h1", null, "Hello person"), React.createElement("p", null, "Peepli live"));
+  }, React.createElement("h1", null, "Hello person"), React.createElement("input", {
+    type: "text",
+    placeholder: "Person"
+  }), React.createElement("p", null, "Peepli live"));
 };
 
 var render = function render(reactElementOrStringOrNumber, container) {
@@ -177,7 +180,7 @@ var render = function render(reactElementOrStringOrNumber, container) {
     Object.keys(reactElementOrStringOrNumber.props).filter(function (p) {
       return p !== "children";
     }).forEach(function (p) {
-      return actualDomElement[p] = reactElementOrStringOrNumber[p];
+      return actualDomElement[p] = reactElementOrStringOrNumber.props[p];
     });
   }
 
@@ -219,7 +222,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61446" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53993" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

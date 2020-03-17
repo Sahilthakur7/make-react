@@ -12,6 +12,10 @@ const React = {
 const App = () => (
   <div className="hello">
     <h1>Hello person</h1>
+    <input
+      type="text"
+      placeholder="Person"
+    />
     <p>Peepli live</p>
   </div>
 );
@@ -29,7 +33,7 @@ const render = (reactElementOrStringOrNumber, container) => {
   if (reactElementOrStringOrNumber.props) {
     Object.keys(reactElementOrStringOrNumber.props)
       .filter(p => p !== "children")
-      .forEach(p => (actualDomElement[p] = reactElementOrStringOrNumber[p]));
+      .forEach(p => (actualDomElement[p] = reactElementOrStringOrNumber.props[p]));
   }
 
   if (reactElementOrStringOrNumber.props.children) {
