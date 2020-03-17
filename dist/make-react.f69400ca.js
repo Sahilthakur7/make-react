@@ -159,12 +159,29 @@ var React = {
   }
 };
 
+var useState = function useState(initialState) {
+  var state = initialState;
+
+  var setState = function setState(newState) {
+    return state = newState;
+  };
+
+  return [state, setState];
+};
+
 var App = function App() {
+  var _a = useState("Ameet"),
+      name = _a[0],
+      setName = _a[1];
+
   return React.createElement("div", {
     className: "hello"
-  }, React.createElement("h1", null, "Hello person"), React.createElement("input", {
+  }, React.createElement("h1", null, "Hello ", name), React.createElement("input", {
     type: "text",
-    placeholder: "Person"
+    placeholder: "Person",
+    onchange: function onchange(e) {
+      return setName(e.target.value);
+    }
   }), React.createElement("p", null, "Peepli live"));
 };
 
