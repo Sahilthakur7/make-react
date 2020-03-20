@@ -9,14 +9,20 @@ const React = {
   }
 };
 
+const states = [];
+let stateCursor = 0;
+
 const useState = (initialState) => {
-  let state = initialState;
+  const FROZEN_CURSOR = stateCursor;
+  states[FROZEN_CURSOR] = states[FROZEN_CURSOR] || initialState;
+
   const setState = (newState) => {
-    state = newState;
+    states[FROZEN_CURSOR] = newState;
     rerender();
   }
+  stateCursor++;
 
-  return [state, setState];
+  return [states[FROZEN_CURSOR], setState];
 }
 
 const App = () => {
@@ -28,6 +34,7 @@ const App = () => {
       <input
         type="text"
         placeholder="Person"
+        value={name}
         onchange={e => setName(e.target.value)}
       />
       <p>The count is {count}</p>
@@ -64,6 +71,7 @@ const render = (reactElementOrStringOrNumber, container) => {
 };
 
 const rerender = () => {
+  stateCursor = 0;
   document.querySelector('#app').firstChild.remove();
   render(<App />, document.querySelector("#app"));
 }

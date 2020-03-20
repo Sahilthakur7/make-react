@@ -158,16 +158,20 @@ var React = {
     return element;
   }
 };
+var states = [];
+var stateCursor = 0;
 
 var useState = function useState(initialState) {
-  var state = initialState;
+  var FROZEN_CURSOR = stateCursor;
+  states[FROZEN_CURSOR] = states[FROZEN_CURSOR] || initialState;
 
   var setState = function setState(newState) {
-    state = newState;
+    states[FROZEN_CURSOR] = newState;
     rerender();
   };
 
-  return [state, setState];
+  stateCursor++;
+  return [states[FROZEN_CURSOR], setState];
 };
 
 var App = function App() {
@@ -184,6 +188,7 @@ var App = function App() {
   }, React.createElement("h1", null, "Hello ", name), React.createElement("input", {
     type: "text",
     placeholder: "Person",
+    value: name,
     onchange: function onchange(e) {
       return setName(e.target.value);
     }
@@ -224,6 +229,7 @@ var render = function render(reactElementOrStringOrNumber, container) {
 };
 
 var rerender = function rerender() {
+  stateCursor = 0;
   document.querySelector('#app').firstChild.remove();
   render(React.createElement(App, null), document.querySelector("#app"));
 };
@@ -257,7 +263,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60588" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56138" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
